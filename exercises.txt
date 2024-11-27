@@ -1,0 +1,6 @@
+walking 4
+running 11
+riding 5
+swimming 12
+pilates 4
+yoga 2
