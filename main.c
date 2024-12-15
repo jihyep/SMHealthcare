@@ -1,7 +1,7 @@
 //
 //  main.c
 //  Calorie Diary
-//
+//	건강관리 프로그램의 주요 동착 흐름 실현 
 //  Created by Eunju Cha
 //
 
@@ -24,7 +24,8 @@ int main() {
     HealthData health_data = {0};
     
     // Tocode: to read the list of the exercises and diets
-    
+    	loadExercises(EXERCISEFILEPATH); //read the information in "excercises.txt" 241215
+    	loadDiets(DIETFILEPATH); //read the information in "diets.txt" 241215
 
     // ToCode: to run the "Healthcare Management Systems" until all calories are used up or the user wants to exit the system
     do {

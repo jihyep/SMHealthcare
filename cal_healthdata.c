@@ -1,7 +1,9 @@
 //
 //  cal_healthdata.c
 //  Diets for Calorie Diary
-//
+//  printHealthData(healthdata 구조체 포인터) - healthdata 구조체에 저장된 정보를 기반으로 사용자에게 건강 관리 히스토리 및 추천사항 제공
+// saveData(파일 포인터, healthdata 구조체 포인터) - 시스템 종료시, healthdata 구조체에 저장된 정보를 ‘health_data’ 파일로 백업
+
 //  Created by Eunju Cha
 //
 

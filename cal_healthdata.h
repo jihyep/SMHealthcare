@@ -1,7 +1,7 @@
 //
 //  cal_healthdata.h
 //  Excercise for Calorie Diary
-//
+//	exercise 구조체, diet 구조체, healthdata 구조체 정의 (수정 필요없음)
 //  Created by Eunju Cha
 //
 
