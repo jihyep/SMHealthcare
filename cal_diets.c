@@ -1,7 +1,9 @@
 //
 //  cal_diets.c
 //  Diets for Calorie Diary
-//
+//	loadDiets(파일 포인터) - ‘diets.txt’ 파일을 읽고 저장
+// inputDiet(healthdata 구조체 포인터) - 사용자가 식사 옵션 선택시, 해당 식사 및 섭취하는 칼로리를 healthdata 구조체에 저장
+
 //  Created by Eunju Cha
 //
 

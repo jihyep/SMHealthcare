@@ -1,7 +1,8 @@
 //
 //  cal_exercise.c
 //  Excercise for Calorie Diary
-//
+//loadExercises(파일 포인터) - ‘exercises.txt’ 파일을 읽고 저장
+// inputExercise(healthdata 구조체 포인터) - 사용자가 운동 옵션선택 시, 운동 종목 및 해당 운동을 통해 소모하는 칼로리를 계산하여 healthdata 구조체에 저장
 //  Created by Eunju Cha
 //
 
