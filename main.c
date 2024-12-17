@@ -24,7 +24,7 @@ int main() {
     HealthData health_data = {0};
     
     int remaining_calories; //declare the remaining calorie variables 241215
-    
+    remaining_calories= health_data.total_calories_intake - health_data.total_calories_burned - BASAL_METABOLIC_RATE;
     // Tocode: to read the list of the exercises and diets
     	loadExercises(EXERCISEFILEPATH); //read the information in "excercises.txt" 241215
     	loadDiets(DIETFILEPATH); //read the information in "diets.txt" 241215
@@ -70,7 +70,7 @@ int main() {
                 printf("[Error] Invalid option. \n");
                 printf("Please try again! \n");
         }
-    } while ( );
+    } while (choice!=4 && remaining_calories==0); //setting exit conditions 241217
 
     return 0;
 }
