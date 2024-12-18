@@ -1,8 +1,8 @@
 //
 //  cal_healthdata.c
-//  Diets for Calorie Diary
-//  printHealthData(healthdata 구조체 포인터) - healthdata 구조체에 저장된 정보를 기반으로 사용자에게 건강 관리 히스토리 및 추천사항 제공
-// saveData(파일 포인터, healthdata 구조체 포인터) - 시스템 종료시, healthdata 구조체에 저장된 정보를 ‘health_data’ 파일로 백업
+//	functions to save and display health data, including exercise and diet histories
+
+//	updated with enhanced error handling and more detailed comments
 
 //  Created by Eunju Cha
 //
@@ -26,6 +26,28 @@
     			3. save the total remaining calrories
 */
 
+/*	241219
+	function <saveData>
+	input
+		- HEALTHEFILEPATH: path to the file where data will be saved.
+		- health_data: pointer to the Healthdata structure containing the exercise and diet records
+	process
+		1. open the specified file in write mode.
+			- if the file cannot be opened, an error message is displayed. and the function returns
+		2. write the exercise history to the file
+			- each exercise entry includes the exercise name and calories burned.
+			- the total calories burned from all exercises is also written
+		3. write the diet history to the file
+			- each diet entry includes the food name and calories consumed.
+			- the total calories consumed from all diets is also written
+		4. write the total reamining calories to the file
+			- this is calculated as total calories intake - total calories burned - basal metabolic rate
+			- the basal metabolic rate is also recorded for reerence
+		5. close the file to ensure all data is saved
+	remark
+		- handles scenarios where the file cannot be created or written to by displaying a user friendly 
+*/
+
 void saveData(const char* HEALTHFILEPATH, const HealthData* health_data) {
 	int i;
     FILE* file = fopen(HEALTHFILEPATH, "w");
@@ -35,6 +57,8 @@ void saveData(const char* HEALTHFILEPATH, const HealthData* health_data) {
     }
 
     // ToCode: to save the chosen exercise and total calories burned 
+    
+    //write exercise history to the file 241219
     fprintf(file, "[Exercises] \n");
     
     	for(i=0; i<health_data->exercise_count; i++)
@@ -45,6 +69,7 @@ void saveData(const char* HEALTHFILEPATH, const HealthData* health_data) {
 		fprintf(file, "Total calories burned: %d kcal\n", health_data->total_calories_burned); // input the total calories_burned in .txt file 241217 
     
     // ToCode: to save the chosen diet and total calories intake 
+    // write diet history to the file 241219
     fprintf(file, "\n[Diets] \n");
     
     	for(i=0; i<health_data->diet_count; i++)
@@ -57,6 +82,8 @@ void saveData(const char* HEALTHFILEPATH, const HealthData* health_data) {
 
 
     // ToCode: to save the total remaining calrories
+    
+    //calculate and write the total remaining calories to the file 241219
     fprintf(file, "\n[Total] \n");
     
     int remaining_calories = (health_data->total_calories_intake - health_data->total_calories_burned - BASAL_METABOLIC_RATE); //calculation of residual calories 241217 
@@ -64,7 +91,7 @@ void saveData(const char* HEALTHFILEPATH, const HealthData* health_data) {
     fprintf(file, "The remaining calroies - %d kcal\n", remaining_calories); // save the total remaining calrories in .txt file 241217
     
     
-    fclose(file);
+    fclose(file); // close the file to save all data 241219
 }
 
 /*
@@ -77,9 +104,32 @@ void saveData(const char* HEALTHFILEPATH, const HealthData* health_data) {
     			3. print out the saved history of calories
 */
 
+/*	241219
+	function <printhealthdata>
+	input: health_data- pointer to the healthdata structure containing the data to be displayed
+	process
+		1. display the exercise history
+			- each entry shows the exercise name and calories burned
+			- if no exercises have been logged: a message is displayed
+		2. display the diet history
+			- each entry shows the food name and calories consumed
+			- if no diets have been logged, a message is displayed
+		3. display the total calories
+			- this includes the basal metabolic rate, total calories burned, total calories consumed, remaining calories
+		4. provide personalized recommendations based on the remaining calories:
+			- remaining calories = 0: indicates the user has perfectly balanced intake and exercise
+			- remaining calories < 0: warns the user about consuming too few calories
+			- remaining calories > 0: encourages the user to exercise more
+		5. ensure all data is presented in a user friendly format
+	remark
+		- handles scenarios where no data has been logged by displaying apporpriate message
+	
+*/
+
 void printHealthData(const HealthData* health_data) {
 	int i;
 	int remaining_calories = (health_data->total_calories_intake - health_data->total_calories_burned - BASAL_METABOLIC_RATE);
+	
 	// ToCode: to print out the saved history of exercises
 	printf("=========================== History of Exercise =======================\n");
   	for(i=0; i<health_data->exercise_count; i++)

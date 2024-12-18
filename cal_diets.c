@@ -129,7 +129,7 @@ void inputDiet(HealthData* health_data) {
 	health_data->total_calories_intake += intake; //update total calories intake 241218
 	
 	//display a summary of the logged diet 241218
-	printf("Food: %s, Calories intake: %d kcal\n", choice, diet_list[choice-1].food_name,diet_list[choice-1].calories_intake);
+	printf("Food: %s, Calories intake: %d kcal\n",  diet_list[choice-1].food_name, diet_list[choice-1].calories_intake);
 
 }
 
