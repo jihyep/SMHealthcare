@@ -1,7 +1,9 @@
 //
 //  main.c
 //  Calorie Diary
-//	건강관리 프로그램의 주요 동착 흐름 실현 
+//	health management systems main flow implementation
+
+
 //  Created by Eunju Cha
 //
 
@@ -13,34 +15,43 @@
 #include "cal_diets.h"
 #include "cal_healthdata.h"
 
-#define EXERCISEFILEPATH "exercises.txt"
-#define DIETFILEPATH "diets.txt"
-#define HEALTHFILEPATH "health_data.txt"
+#define EXERCISEFILEPATH "exercises.txt" // path to the exercise data file
+#define DIETFILEPATH "diets.txt" // path to the diet data file
+#define HEALTHFILEPATH "health_data.txt" // path to the health data file
 
-static int choice;
+static int choice; // variable to store user's menu choice
 
 int main() {
-	// To initialize the health data object
+	// To initialize the health data object. setting all fields to 0 initially
+	// the reason for defining health_data here is that we need it initialized
+	// before we can start calculating and updating the remaining calories
     HealthData health_data = {0};
     
     int remaining_calories; //variable to calculate remaining calories 241215
     
     
 	// Tocode: to read the list of the exercises and diets
-    	loadExercises(EXERCISEFILEPATH); //read the information in "excercises.txt" 241215
-    	loadDiets(DIETFILEPATH); //read the information in "diets.txt" 241215
+	// load exercise and diet information from files into the system
+	// these functions read from predefined files to set up available exercises and diet options
+    	loadExercises(EXERCISEFILEPATH); //read exercise data excercises.txt 241215
+    	loadDiets(DIETFILEPATH); //read diet data from diets.txt 241215
 
     // ToCode: to run the "Healthcare Management Systems" until all calories are used up or the user wants to exit the system
+    // main loop for the healthcare management system, continues until remaining calories are zero or the user chooses to exit
     do {
+    	// calculate remaining calories based on total intake, calories burned, basal metabolic rate
+    	// it's essential to calculate remaining_calories here as health_data is already initialized
+    	// the reason i separate the health_data initialization and remaining calories is because the health_data structure contains necessary fields for this calculation (total_calories_intake, total_calories_burned ...etc)
     	remaining_calories= health_data.total_calories_intake - health_data.total_calories_burned - BASAL_METABOLIC_RATE; // update remaining calories dynamically 241219
     	
-    	// check if remaining calories are zero 241219
+    	// if remaining calories are 0, alert the user and stop the loop 241219
     	if (remaining_calories==0){
             printf("You have consumed all your calories for today! \n");
             
             break; // exit the loop 241219
 		} 
 		
+		// if there are still calories remaining, display the menu and prompt the user for input
 		else{
 			printf("\n=======================================================================\n");
         	printf("[Healthcare Management Systems] \n");
@@ -49,7 +60,7 @@ int main() {
         	printf("3. Show logged information \n");
         	printf("4. Exit \n");
         	printf("Select the desired number: ");
-        	scanf("%d", &choice);
+        	scanf("%d", &choice); // store users choice 241219
         	printf("=======================================================================\n");
         }
         
@@ -64,21 +75,22 @@ int main() {
                 break;
                 
             case 3:
-            	printHealthData(&health_data); // display health data 241215
+            	printHealthData(&health_data); // display all logged health data 241215
                 break;
                 
             case 4:
-            	
+            	// exit message and loop termination
     			printf("Exit the system.\n");
     			printf("=======================================================================\n");
                 break;
                 
             default:
+            	// handle invalid choices
                 printf("[Error] Invalid option. \n");
                 printf("Please try again! \n");
         }
-    } while (choice!=4); //setting exit conditions 241217
+    } while (choice!=4); //the loop will continue until the user chooses option 4(exit) 241217
 
-    return 0;
+    return 0; // exit the program
 }
 
