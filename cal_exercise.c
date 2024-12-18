@@ -110,7 +110,7 @@ void inputExercise(HealthData* health_data) {
 	printf("Enter the number of the exercise to log (0 to exit)");
 	scanf("%d", &choice); //scan a user's choice number 241217
 	
-	if(choice!=1||choice<0||choice>exercise_list_size)
+	if(choice<0||choice>exercise_list_size)
 	{
 		printf("Invalid choice.\n"); // if an option is chosen that does not have
 		return;
@@ -126,9 +126,9 @@ void inputExercise(HealthData* health_data) {
     printf("Enter the duration of the exercise (in min.): ");
     scanf("%d", &duration);
     
-    if (duration!=1||duration<=0)
+    if (duration<=0)
     {
-    	printf("Invalid duration.\n");
+    	printf("Invalid duration.\n");\
     	return;
 	}
 
