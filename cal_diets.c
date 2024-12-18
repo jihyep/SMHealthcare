@@ -77,9 +77,16 @@ void inputDiet(HealthData* health_data) {
 
     // ToCode: to enter the selected diet in the health data
     strcpy(health_data->diet[health_data->diet_count].food_name, diet_list[choice-1].food_name); // save selected food 241127
-
+	health_data -> diet_count++; // increment the diet count 241218 
+	
     // ToCode: to enter the total calories intake in the health data
-
+	int intake;
+	intake = diet_list[choice-1].calories_intake;
+	health_data->diet[health_data->diet_count].calories_intake = intake;
+	health_data->total_calories_intake += intake;
+	
+	//display a summary of the logged diet 241218
+	printf("Food: %s, Calories intake: %d kcal\n", choice, diet_list[choice-1].food_name,diet_list[choice-1].calories_intake);
 
 }
 
