@@ -21,6 +21,7 @@
 
 static int choice; // variable to store user's menu choice
 
+// main function for the healthcare management system
 int main() {
 	// To initialize the health data object. setting all fields to 0 initially
 	// the reason for defining health_data here is that we need it initialized
@@ -33,7 +34,7 @@ int main() {
 	// Tocode: to read the list of the exercises and diets
 	// load exercise and diet information from files into the system
 	// these functions read from predefined files to set up available exercises and diet options
-    	loadExercises(EXERCISEFILEPATH); //read exercise data excercises.txt 241215
+    	loadExercises(EXERCISEFILEPATH); //read exercise data from excercises.txt 241215
     	loadDiets(DIETFILEPATH); //read diet data from diets.txt 241215
 
     // ToCode: to run the "Healthcare Management Systems" until all calories are used up or the user wants to exit the system

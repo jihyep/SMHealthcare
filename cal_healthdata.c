@@ -34,7 +34,7 @@
 	returns: NONE (void function)
 	process
 		1. open the specified file in write mode.
-			- if the file cannot be opened, an error message is displayed. and the function returns
+			- display an error message and exit if the file cannot be opened
 		2. write the exercise history to the file
 			- include the name of each exercise and the calories burned per minute
 			- write the total calories burned across all exercises
@@ -54,7 +54,7 @@ void saveData(const char* HEALTHFILEPATH, const HealthData* health_data) {
 	// PROCESS1 : attempt to open the file for writing
 	// fopen returns a pointer to the file if successful, or NULL if the operation fails
 	int i;
-    FILE* file = fopen(HEALTHFILEPATH, "w");
+    FILE* file = fopen(HEALTHFILEPATH, "w"); // open the file for writing
     if (file == NULL) {
         printf("There is no file for health data.\n"); // if file cannot be opened display an error
         return;  // exit the function without performing further operations
@@ -131,7 +131,7 @@ void saveData(const char* HEALTHFILEPATH, const HealthData* health_data) {
 		5. ensure all data is presented in a user friendly format
 	remark
 		- handles scenarios where no data exists with apporpriate message
-		- presents data in a structured and readable format
+		- presents data in a clear, user friendly format
 	
 */
 
@@ -175,11 +175,11 @@ void printHealthData(const HealthData* health_data) {
 	// ToCode: to print out the recommendtaion depending on the current total calories burned and intake    
     // PROCESS 5: provide recommendations based on calorie balance
 	if (remaining_calories == 0)
-    {
+    {	// if perfectly balanced
     	printf("You have consumed all your calories for today!\n");
 	}
     	else if(remaining_calories<0)
-    	{
+    	{	// if in defiit
     		printf("[Warining] Too few calories!\n");
     		if(health_data->total_calories_intake==DAILY_CALORIE_GOAL)
     		{
@@ -195,7 +195,7 @@ void printHealthData(const HealthData* health_data) {
 			}
     	}	
     	else
-    	{
+    	{	// if in surplus
     		printf("Please exercise for your health!\n");
     		
     		if(health_data->total_calories_intake==DAILY_CALORIE_GOAL)

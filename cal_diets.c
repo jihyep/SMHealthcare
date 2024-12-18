@@ -38,26 +38,27 @@ static int diet_list_size = 0; //the current number of deits loaded 241218
 		4. close the file after reading all entries
 	remark
 		- if the file cannot be loaded, a message is displayed. and the function returns
-		- if the file contains more entries than MAX_DIETS, excess entries are ignored
+		- any entries beyond `MAX_DIETS` are ignored
 	
 */
 void loadDiets(const char* DIETFILEPATH) {
-    FILE *file = fopen(DIETFILEPATH, "r");
+    FILE *file = fopen(DIETFILEPATH, "r"); // open the file for reading
     if (file == NULL) {
-        printf("There is no file for diets! \n");
+        printf("There is no file for diets! \n"); // if the file cannot be opened, print an error message and exit the function
         return;
     }
 
      // ToCode: to read a list of the diets from the given file
-    while (fscanf(file, "%s %d", diet_list[diet_list_size].food_name, &diet_list[diet_list_size].calories_intake)!=EOF) 
+    while (fscanf(file, "%s %d", diet_list[diet_list_size].food_name, &diet_list[diet_list_size].calories_intake)!=EOF) // read data from the file into the diet_list array
 	{
-        if (diet_list_size >= MAX_DIETS){
-        	break; // prevent array overflow 241218
+        if (diet_list_size >= MAX_DIETS) // ensure the array does not exceed its maximum capacity
+		{
+        	break; // exit the loop if the array is full 241218
 		}
-		diet_list_size++; // increment the count of loaded diets 241217
+		diet_list_size++; // increment the size of the diet list after successfully reading an entry 241217
     }
     
-    fclose(file); //close the file after reading 241218
+    fclose(file); //close the file after reading all data 241218
 }
 
 /*
@@ -69,9 +70,9 @@ void loadDiets(const char* DIETFILEPATH) {
     			2. enter the selected diet and the total calories intake in the health data
 */
 
-/*
+/* 241219
 	function <inputDiet>
-	input: health_data - pointer to the healthdata structure
+	input: health_data - pointer to the healthdata structure where the selected diet will be recorded
 	process
 		1. display all loaded diets, showing their index, name, and calories intake.
 		2. prompt the user to select a diet by its displayed index or enter 0 to exit
@@ -94,7 +95,7 @@ void inputDiet(HealthData* health_data) {
     int choice, i;
     
     // ToCode: to provide the options for the diets to be selected
-    printf("The list of diets:\n");
+    printf("The list of diets:\n"); // display the list of available diets
     for(i=0; i<diet_list_size; i++)
 	{
 		printf("%d: %s (%d kcal per min.)\n", i+1, diet_list[i].food_name , diet_list[i].calories_intake); // print out a diet list 241217
@@ -105,23 +106,23 @@ void inputDiet(HealthData* health_data) {
     printf("Enter the number of the diet to log (0 to exit): "); //present exit options 241217
 	scanf("%d", &choice); //scan a user's choice number 241217
 	
-	if(choice<0 || choice> diet_list_size)
+	if(choice<0 || choice> diet_list_size) // validate the user's choice
 	{
 		printf("Invalid choice.\n");
-		return;
+		return; // exit the function if the choice is invalid
 	}
 	if (choice == 0)
 	{
-		return; // user chose to exit 241217
+		return; // exit if the user selects zero 241217
 	}
 
 	// update the selected diet's data
 	int intake;
-	intake = diet_list[choice-1].calories_intake;
+	intake = diet_list[choice-1].calories_intake; // retrieve the calorie intake for the selected diet
 	
     // ToCode: to enter the selected diet in the health data
-    strcpy(health_data->diet[health_data->diet_count].food_name, diet_list[choice-1].food_name); // save selected food 241127
-	health_data->diet[health_data->diet_count].calories_intake = intake;
+    strcpy(health_data->diet[health_data->diet_count].food_name, diet_list[choice-1].food_name); // undate the health data with the selected diet's information. copy the selected diet's name into the healthdata structure 241127
+	health_data->diet[health_data->diet_count].calories_intake = intake; // record the calorie intake
 	 
 	
     // ToCode: to enter the total calories intake in the health data
