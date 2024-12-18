@@ -42,14 +42,14 @@ static int diet_list_size = 0; //the current number of deits loaded 241218
 	
 */
 void loadDiets(const char* DIETFILEPATH) {
-    FILE *file = fopen(DIETFILEPATH, "r"); // open the file for reading
-    if (file == NULL) {
-        printf("There is no file for diets! \n"); // if the file cannot be opened, print an error message and exit the function
-        return;
+    FILE *file = fopen(DIETFILEPATH, "r"); // open the file in read mode to fetch diet info
+    if (file == NULL) { // checks if the file was successfully opened
+        printf("There is no file for diets! \n"); // displays an error message if the file is missing
+        return; // exits the function to avoid further errors
     }
 
      // ToCode: to read a list of the diets from the given file
-    while (fscanf(file, "%s %d", diet_list[diet_list_size].food_name, &diet_list[diet_list_size].calories_intake)!=EOF) // read data from the file into the diet_list array
+    while (fscanf(file, "%s %d", diet_list[diet_list_size].food_name, &diet_list[diet_list_size].calories_intake)!=EOF) // reads diet data line by line using fscanf for structured parsing
 	{
         if (diet_list_size >= MAX_DIETS) // ensure the array does not exceed its maximum capacity
 		{
@@ -96,22 +96,22 @@ void inputDiet(HealthData* health_data) {
     
     // ToCode: to provide the options for the diets to be selected
     printf("The list of diets:\n"); // display the list of available diets
-    for(i=0; i<diet_list_size; i++)
+    for(i=0; i<diet_list_size; i++) // loops through all loaded diets
 	{
-		printf("%d: %s (%d kcal per min.)\n", i+1, diet_list[i].food_name , diet_list[i].calories_intake); // print out a diet list 241217
+		printf("%d: %s (%d kcal per min.)\n", i+1, diet_list[i].food_name , diet_list[i].calories_intake); // displays diet index, name, and calories for clarity 241217
 	}
     
 	// ToCode: to enter the diet to be chosen with exit option
 	// prompt the user for their choice
     printf("Enter the number of the diet to log (0 to exit): "); //present exit options 241217
-	scanf("%d", &choice); //scan a user's choice number 241217
+	scanf("%d", &choice); // reads the users selection 241217
 	
 	if(choice<0 || choice> diet_list_size) // validate the user's choice
 	{
 		printf("Invalid choice.\n");
 		return; // exit the function if the choice is invalid
 	}
-	if (choice == 0)
+	if (choice == 0) // checks if the user chose to exit
 	{
 		return; // exit if the user selects zero 241217
 	}

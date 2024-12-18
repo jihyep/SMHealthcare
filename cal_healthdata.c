@@ -54,8 +54,8 @@ void saveData(const char* HEALTHFILEPATH, const HealthData* health_data) {
 	// PROCESS1 : attempt to open the file for writing
 	// fopen returns a pointer to the file if successful, or NULL if the operation fails
 	int i;
-    FILE* file = fopen(HEALTHFILEPATH, "w"); // open the file for writing
-    if (file == NULL) {
+    FILE* file = fopen(HEALTHFILEPATH, "w"); // open the file for writing. file mode ensures data is written from scratch
+    if (file == NULL) { // check if the file opening failed
         printf("There is no file for health data.\n"); // if file cannot be opened display an error
         return;  // exit the function without performing further operations
     }
@@ -65,9 +65,9 @@ void saveData(const char* HEALTHFILEPATH, const HealthData* health_data) {
     // PROCESS2: write exercise history to the file 241219
     fprintf(file, "[Exercises] \n"); // header for the exercise section
     
-    	for(i=0; i<health_data->exercise_count; i++)
+    	for(i=0; i<health_data->exercise_count; i++) // loop through all logged exercises
     	{
-    		//write each exercies name and calories burned per minute
+    		// write each exercies name and calories burned per minute
     		// data is retrieved from the exercises array in health_data
     		fprintf(file, "%s - %d kcal\n", health_data->exercises[i].exercise_name, health_data->exercises[i].calories_burned_per_minute);
 		} // save total exercise in .txt file 241217 
@@ -76,9 +76,9 @@ void saveData(const char* HEALTHFILEPATH, const HealthData* health_data) {
     
     // ToCode: to save the chosen diet and total calories intake 
     // PROCESS3 : write diet history to the file 241219
-    fprintf(file, "\n[Diets] \n");
+    fprintf(file, "\n[Diets] \n"); // header to indicate the diet section
     
-    	for(i=0; i<health_data->diet_count; i++)
+    	for(i=0; i<health_data->diet_count; i++) // loop through all logged diets
     	{
     		fprintf(file, "%s - %d kcal\n", health_data->diet[i].food_name, health_data->diet[i].calories_intake); // write each food item's name and the corresponding calories consumed
 		} // save total diet in .txt file 241217
@@ -138,7 +138,7 @@ void saveData(const char* HEALTHFILEPATH, const HealthData* health_data) {
 void printHealthData(const HealthData* health_data) {
 	// PROCESS 1: calculate remaining calories for use in this function
 	int i;
-	int remaining_calories = (health_data->total_calories_intake - health_data->total_calories_burned - BASAL_METABOLIC_RATE);
+	int remaining_calories = (health_data->total_calories_intake - health_data->total_calories_burned - BASAL_METABOLIC_RATE); // calculated locally within functions where they are needed. this avoids polluting the global scope and keeps the data encapsulated
 	
 	// ToCode: to print out the saved history of exercises
 	// PROCESS 2: print the exercise history

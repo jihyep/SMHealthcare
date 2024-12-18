@@ -42,9 +42,9 @@ int exercise_list_size = 0; // the current number of exercise loaded 241218
 void loadExercises(const char* EXERCISEFILEPATH) {
     FILE *file = fopen(EXERCISEFILEPATH, "r"); // open the file in read mode.
     // fopen returns a file pointer if successful, or NULL if the file cannot be opened
-    if (file == NULL) {
-        printf("There is no file for exercises!\n"); // if the file cannot be opened, display an error message and exit the function
-        return;
+    if (file == NULL) { // check if file opening failed
+        printf("There is no file for exercises!\n"); // display error if file not found
+        return; // exit function if file cannot be opened
     }
 
     // ToCode: to read a list of the exercises from the given file
@@ -101,7 +101,7 @@ void loadExercises(const char* EXERCISEFILEPATH) {
 			
 */			
 void inputExercise(HealthData* health_data) {
-    int choice, duration, i;
+    int choice, duration, i; // variables for user choice, exercise duration, and loop control
     
     // ToCode: to provide the options for the exercises to be selected
     // display the list of available exercises 241218
@@ -120,7 +120,7 @@ void inputExercise(HealthData* health_data) {
 	// validate the users choice
 	if(choice<0||choice>exercise_list_size) // choice must be within the valid rage (1 to exercise_list_size)
 	{
-		printf("Invalid choice.\n"); // handle invalid input by displaying an error message
+		printf("Invalid choice.\n"); // display error if input is out of range
 		return;
 	}
 	
@@ -137,7 +137,7 @@ void inputExercise(HealthData* health_data) {
     
     if (duration<=0) // validate the duration
     {
-    	printf("Invalid duration.\n"); // ensure the duration is a positive integer
+    	printf("Invalid duration.\n"); // display error for non positive duration
     	return;
 	}
 
